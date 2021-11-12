@@ -1,13 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+
 const Login = () => {
+    const [formVals, setFormVals] = useState({})
+
+    const handleChange = (e) =>{
+        
+    }
     
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
         </ModalContainer>
+        <FormGroup>
+            <Label htmlFor='username'> Username:
+                <Input 
+                    id='username'
+                    type='text'
+                    name='username'
+                    // value={formVals.username}
+                    onChange={handleChange}
+                />
+            </Label>
+            <Label htmlFor='password'> Password:
+                <Input
+                    id='password'
+                    type='text'
+                    name='password'
+                    // value={formVals.password}
+                    onChange={handleChange}
+                />
+            </Label>
+        </FormGroup>
     </ComponentContainer>);
 }
 
