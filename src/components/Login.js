@@ -1,34 +1,41 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { useHistory } from 'react-router';
 
 const initialVals={
     username: '',
     password: '',
 }
-
 const Login = () => {
-    const [formVals, setFormVals] = useState(initialVals)
+    const [ credentials, setCredentials ] = useState(initialVals)
+    const [ error, setError ] = useState('')
+    const { push } = useHistory()
 
     const handleChange = (e) =>{
-        setFormVals({ 
-            ...formVals,
+        setCredentials({ 
+            ...credentials,
             [e.target.name]: e.target.value
         })
     }
-    // console.log(formVals)
+    // console.log(credentials)
 
-    const handleSubmit=(e)=>{
+    const handleSubmit=  (e)=> {
         e.preventDefault()
-        axios.post('http://localhost:5004/api/login', formVals)
-            .then(res=>{
+         axios.post('http://localhost:5004/api/login', credentials)
+        .then(res=>{
                 console.log(res)
-                
+                //set token to localStorage
+                window.localStorage.setItem('token', res.data.token)
+                // then route user to /view
+                push('/view')
             })
             .catch(err=>{
-                console.log(err)
+                console.error(err.response)
+                setError(err.response.data.error)
             })
-    }
+        }
+        console.log(error)
     
     return(<ComponentContainer>
         <ModalContainer>
@@ -41,7 +48,7 @@ const Login = () => {
                     id='username'
                     type='text'
                     name='username'
-                    value={formVals.username}
+                    value={credentials.username}
                     onChange={handleChange}
                 />
             </Label>
@@ -50,12 +57,12 @@ const Login = () => {
                     id='password'
                     type='text'
                     name='password'
-                    value={formVals.password}
+                    value={credentials.password}
                     onChange={handleChange}
                 />
             </Label>
             <Button id='submit' type='submit'>Log in</Button>
-            <p id='error'>  </p>
+            <p id='error' > {error} </p>
         </FormGroup>
     </ComponentContainer>);
 }
