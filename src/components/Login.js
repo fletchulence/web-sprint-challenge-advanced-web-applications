@@ -1,12 +1,33 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
+const initialVals={
+    username: '',
+    password: '',
+}
 
 const Login = () => {
-    const [formVals, setFormVals] = useState({})
+    const [formVals, setFormVals] = useState(initialVals)
 
     const handleChange = (e) =>{
-        
+        setFormVals({ 
+            ...formVals,
+            [e.target.name]: e.target.value
+        })
+    }
+    // console.log(formVals)
+
+    const handleSubmit=(e)=>{
+        e.preventDefault()
+        axios.post('http://localhost:5004/api/login', formVals)
+            .then(res=>{
+                console.log(res)
+                
+            })
+            .catch(err=>{
+                console.log(err)
+            })
     }
     
     return(<ComponentContainer>
@@ -14,13 +35,13 @@ const Login = () => {
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
         </ModalContainer>
-        <FormGroup>
+        <FormGroup onSubmit={handleSubmit}>
             <Label htmlFor='username'> Username:
                 <Input 
                     id='username'
                     type='text'
                     name='username'
-                    // value={formVals.username}
+                    value={formVals.username}
                     onChange={handleChange}
                 />
             </Label>
@@ -29,10 +50,12 @@ const Login = () => {
                     id='password'
                     type='text'
                     name='password'
-                    // value={formVals.password}
+                    value={formVals.password}
                     onChange={handleChange}
                 />
             </Label>
+            <Button id='submit' type='submit'>Log in</Button>
+            <p id='error'>  </p>
         </FormGroup>
     </ComponentContainer>);
 }
