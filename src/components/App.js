@@ -18,15 +18,14 @@ const App = () => {
       <RouteContainer>
 
         <Switch>
+          {/* login */}
           <Route path="/login">
             <Login />
           </Route>  
 
-          <PrivateRoute path="/view" component={View}/>
-             
+          {/* protecct routes */}
+          <PrivateRoute path="/view" component={View}/>  
           <PrivateRoute path="/logout" component={Logout}/>
-            {/* <Logout />
-          </Route>    */}
 
           <Route exact path="/">
             <Login/>
