@@ -17,53 +17,56 @@ const Login = () => {
             ...credentials,
             [e.target.name]: e.target.value
         })
+        // setError({error: ''})
     }
     // console.log(credentials)
 
-    const handleSubmit=  (e)=> {
+    const handleSubmit= (e) => {
         e.preventDefault()
          axios.post('http://localhost:5004/api/login', credentials)
         .then(res=>{
-                console.log(res)
+                // console.log(res)
                 //set token to localStorage
                 window.localStorage.setItem('token', res.data.token)
                 // then route user to /view
                 push('/view')
             })
             .catch(err=>{
-                console.error(err.response)
+                // console.error(err.response)
                 setError(err.response.data.error)
             })
         }
-        console.log(error)
+        // console.log(error)
     
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+            <FormGroup onSubmit={handleSubmit}>
+                <Label htmlFor='username'> Username:
+                    <Input 
+                        id='username'
+                        type='text'
+                        name='username'
+                        value={credentials.username}
+                        onChange={handleChange}
+                    />
+                </Label>
+                <Label htmlFor='password'> Password:
+                    <Input
+                        id='password'
+                        type='text'
+                        name='password'
+                        value={credentials.password}
+                        onChange={handleChange}
+                    />
+                </Label>
+                <Button id='submit' type='submit'>Log in</Button>
+                <Label> 
+                    <p id='error' style={{color: 'red'}}> {error} </p>
+                </Label>
+            </FormGroup>
         </ModalContainer>
-        <FormGroup onSubmit={handleSubmit}>
-            <Label htmlFor='username'> Username:
-                <Input 
-                    id='username'
-                    type='text'
-                    name='username'
-                    value={credentials.username}
-                    onChange={handleChange}
-                />
-            </Label>
-            <Label htmlFor='password'> Password:
-                <Input
-                    id='password'
-                    type='text'
-                    name='password'
-                    value={credentials.password}
-                    onChange={handleChange}
-                />
-            </Label>
-            <Button id='submit' type='submit'>Log in</Button>
-            <p id='error' > {error} </p>
-        </FormGroup>
     </ComponentContainer>);
 }
 
