@@ -22,11 +22,12 @@ const View = (props) => {
             })
             .catch(err=>console.error(err))
     }
-
-
     
+
     useEffect(()=>{
+        //onmount get the 
         articleServices()
+
     }, [])
 
     // console.log(articles)
@@ -35,6 +36,7 @@ const View = (props) => {
         axiosWithAuth().delete(`http://localhost:5004/api/articles/${id}`)
             .then(res=>{
                 // console.log(res.data)
+                // setArticles(res.data)
                 articleServices()
             })
             .catch(err=>{
