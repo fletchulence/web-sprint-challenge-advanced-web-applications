@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useParams } from 'react-router';
 
 import Article from './Article';
 import EditForm from './EditForm';
+
 
 // import articleService from '../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
@@ -12,8 +14,9 @@ const View = (props) => {
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
+    const { id } = useParams
 
-    const articleServices = (articles) =>{
+    const articleServices = () =>{
         const blogArticles = [];
         axiosWithAuth().get('http://localhost:5004/api/articles')
           .then(res=>{
@@ -29,7 +32,6 @@ const View = (props) => {
                     image: article.image    //?NOT IN THE README AS SOMETHING IT MAPS THRU -- mostly bc it looks better with this
                 }) 
             return blogArticles
-
             })
             setArticles(blogArticles)
             })
@@ -58,9 +60,27 @@ const View = (props) => {
     // console.log(articles)
 
     const handleDelete = (id) => {
+        axiosWithAuth().delete(`http://localhost:5004/api/articles/${id}`)
+            .then(res=>{
+                console.log(res)
+                // articleServices(res)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        // these are things that are editing the //!actual posts
+        // we need to do the posts in the -- article i think
     }
 
-    const handleEdit = (article) => {
+    const handleEdit = (id, article) => {
+        axiosWithAuth().put(`http://localhost:5004/api/articles/${id}`, article)
+            .then(res=>{
+                console.log(res)
+                articleServices(article)
+            })
+            .catch(err=>{
+                console.error(err)
+            })
     }
 
     const handleEditSelect = (id)=> {
@@ -86,7 +106,10 @@ const View = (props) => {
             </ArticleContainer>
             
             {
-                editing && <EditForm editId={editId} handleEdit={handleEdit} handleEditCancel={handleEditCancel}/>
+                editing && <EditForm 
+                                editId={editId} 
+                                handleEdit={handleEdit} 
+                                handleEditCancel={handleEditCancel}/>
             }
         </ContentContainer>
     </ComponentContainer>);
