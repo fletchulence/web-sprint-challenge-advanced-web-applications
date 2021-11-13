@@ -7,6 +7,7 @@ import MutationObserver from 'mutationobserver-shim';
 import Article from './Article';
 
 test('renders component without errors', ()=> {
+   render(<Article/>)
 });
 
 // test('renders headline, author from the article when passed in through props', ()=> {

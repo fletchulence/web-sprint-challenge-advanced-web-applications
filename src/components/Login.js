@@ -17,9 +17,7 @@ const Login = () => {
             ...credentials,
             [e.target.name]: e.target.value
         })
-        // setError({error: ''})
     }
-    // console.log(credentials)
 
     const handleSubmit= (e) => {
         e.preventDefault()
