@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 
-import { render } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 
 import userEvent from '@testing-library/user-event';
 import MutationObserver from 'mutationobserver-shim';
@@ -21,11 +21,36 @@ test('renders component without errors', ()=> {
    render(<Article article={testArticle}/>)
 });
 
-// test('renders headline, author from the article when passed in through props', ()=> {
-// });
+test('renders headline, author from the article when passed in through props', ()=> {
+   //ARRANGE: what component
+   const {rerender} = render(<Article article={{}}/>)
+   //ACT: 
+   const article = screen.getByTestId(/article/i)
+   const header = screen.getByTestId(/headline/i)
+   const author = screen.getByTestId(/author/i)
+   //ASSERT
+   expect(header).not.toHaveValue()
+   expect(author).not.toHaveValue()
 
-// test('renders "Associated Press" when no author is given', ()=> {
-// });
+   //rerender
+   rerender((<Article article={article}/>))
+
+   expect(article).toBeInTheDocument()
+
+});
+
+test('renders "Associated Press" when no author is given', ()=> {
+   render(<Article article={testArticle}/>)
+   //ACT: 
+   // const article = screen.queryByTestId(/article/i)
+   const header = screen.getByTestId(/headline/i)
+   const author = screen.getByTestId(/author/i)
+   //ASSERT
+   expect(header).toBeInTheDocument()
+   //eventhough there is nothing being passed in to author,
+   // it should still render
+   expect(author).toBeInTheDocument()
+});
 
 // test('executes handleDelete when the delete button is pressed', ()=> {
 // });
