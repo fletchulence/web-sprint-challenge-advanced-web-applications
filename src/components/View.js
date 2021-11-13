@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Article from './Article';
 import EditForm from './EditForm';
 
-import articleService from '../services/articleServices';
+// import articleService from '../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 const View = (props) => {
@@ -12,10 +12,10 @@ const View = (props) => {
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
-    console.log(props)
-
+    
     useEffect(()=>{
-        // setArticles(articleService())
+        // setArticles(props.articleService(articles.id))
+        // console.log(articles)
 
         axiosWithAuth().get('http://localhost:5004/api/articles')
             .then(res=>{

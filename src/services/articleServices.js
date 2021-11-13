@@ -6,12 +6,15 @@ import PrivateRoute from "../components/PrivateRoute";
 
 const articleService = () => {
 
-   const [ blurb, setBlurb ] = React.useState({})
+   // const [ state, setState ] = React.useState({})
    
       axiosWithAuth().get('http://localhost:5004/api/articles')
          .then(res=>{
             console.log(res.data)
-            setBlurb(res.data)
+            setState({
+               ...state,
+               state: [res.data]
+            })
             //    {
                
             //    blurb: {
@@ -25,10 +28,8 @@ const articleService = () => {
          .catch(err=>{
             console.log({ err })
          })
-         return(
-            <div>
-
-            </div>
+         return( state
+            
          )
 }
 
