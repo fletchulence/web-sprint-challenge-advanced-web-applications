@@ -16,25 +16,25 @@ const View = (props) => {
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
-    // console.log(props)
+    // const { id } = useParams
 
     const articleServices = () =>{
-        axiosWithAuth().post('http://localhost:5004/api/articles', articles)
+        axiosWithAuth().get('http://localhost:5004/api/articles')
           .then(res=>{
             // console.log(res.data)
             // const article = res.data
-            res.data.map((article)=> {
-                articles.push({
-                    id: article.id, 
-                    headline: article.headline, //title of article
-                    createdOn: article.createdOn, //timestamp of when article was added
-                    summary: article.summary, //short summary statement of article
-                    body: article.summary,  //paragraph of article text
-                    image: article.image    //?NOT IN THE README AS SOMETHING IT MAPS THRU -- mostly bc it looks better with this
-                }) 
-            return articles
-            })
-            setArticles(articles)
+            // res.data.map((article)=> {
+            //     // article.push({
+            //     //     id: article.id, 
+            //     //     headline: article.headline, //title of article
+            //     //     createdOn: article.createdOn, //timestamp of when article was added
+            //     //     summary: article.summary, //short summary statement of article
+            //     //     body: article.summary,  //paragraph of article text
+            //     //     image: article.image    //?NOT IN THE README AS SOMETHING IT MAPS THRU -- mostly bc it looks better with this
+            //     // }) 
+            // return article
+            // })
+            setArticles(res.data)
             })
             .catch(err=>console.error(err))
     }
@@ -42,16 +42,19 @@ const View = (props) => {
 
     
     useEffect(()=>{
-        // const getArticles= ()=>{
-             axiosWithAuth().get('http://localhost:5004/api/articles')
-                .then(res=>{
-                    setArticles(res.data)
-                })
-                .catch(err=>{
-                    console.error({ err })
-                })
-        
         articleServices()
+
+        // const getArticles= ()=>{
+            //  axiosWithAuth().get('http://localhost:5004/api/articles')
+            //     .then(res=>{
+            //         console.log(res)
+            //         setArticles(res.data)
+            //         // articleServices()
+            //     })
+            //     .catch(err=>{
+            //         console.error({ err })
+            //     })
+        
         // getArticles()
         // console.log(articles)
         // axios.post('')
@@ -74,8 +77,8 @@ const View = (props) => {
     const handleDelete = (id) => {
         axiosWithAuth().delete(`http://localhost:5004/api/articles/${id}`)
             .then(res=>{
-                console.log(res.data.id)
-                setArticles(res.data)
+                // console.log(res.data)
+                articleServices()
             })
             .catch(err=>{
                 console.log(err)
@@ -84,11 +87,27 @@ const View = (props) => {
         // we need to do the posts in the -- article i think
     }
 
-    const handleEdit = (id, article) => {
-        axiosWithAuth().put(`http://localhost:5004/api/articles/${id}`, article)
+    const handleEdit = (article) => {
+        axiosWithAuth().put(`http://localhost:5004/api/articles/${editId}`, article)
             .then(res=>{
                 console.log(res)
-                articleServices(res.data)
+                console.log(article.author)
+
+                articleServices()
+                // article.map((item)=>console.log(item))
+                // setArticles(
+                //      articles.map(()=> {
+                //         article={
+                //             id: article.id, 
+                //             headline: article.headline, //title of article
+                //             createdOn: article.createdOn, //timestamp of when article was added
+                //             summary: article.summary, //short summary statement of article
+                //             body: article.summary,  //paragraph of article text
+                //             image: article.image    //?NOT IN THE README AS SOMETHING IT MAPS THRU -- mostly bc it looks better with this
+                //         } 
+                //     return article
+                //     })) //this is what allows it to edit -- due to a put
+
                 setEditing(false)
             })
             .catch(err=>{

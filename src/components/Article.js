@@ -5,6 +5,8 @@ import moment from 'moment';
 const Article = (props)=> {
     const {article, handleDelete, handleEditSelect} = props;
 
+    console.log(article)
+
     return(<div data-testid="article">
         <ArticleStyle>
             <Container>

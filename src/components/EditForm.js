@@ -64,7 +64,7 @@ const EditForm = (props)=> {
             <label>Body</label>
             <input value={article.body} id="body" name="body" onChange={handleChange}/>
         </div>
-        <Button id="editButton">Edit Article</Button>
+        <Button type='submit' id="editButton">Update</Button> {/* changed this!!!!!!!!! */}
         <Button onClick={handleCancel}>Cancel</Button>
     </FormContainer>);
 }
