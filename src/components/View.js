@@ -13,10 +13,10 @@ const View = (props) => {
     const [editId, setEditId] = useState();
 
 
-    const articleServices = () =>{
+    const articleServices = (articles) =>{
         const blogArticles = [];
         axiosWithAuth().get('http://localhost:5004/api/articles')
-         .then(res=>{
+          .then(res=>{
             console.log(res.data)
             // const article = res.data
             res.data.map((article)=> {
@@ -25,29 +25,16 @@ const View = (props) => {
                     headline: article.headline, //title of article
                     createdOn: article.createdOn, //timestamp of when article was added
                     summary: article.summary, //short summary statement of article
-                    body: article.summary  //paragraph of article text
-                    // }
+                    body: article.summary,  //paragraph of article text
+                    image: article.image    //?NOT IN THE README AS SOMETHING IT MAPS THRU -- mostly bc it looks better with this
                 }) 
-                return blogArticles
+            return blogArticles
+
             })
-            
-            // setArticles(res.data)
-            // res.data.map((article)=>{
-                // console.log(id);
-                // return (article)
-                // article:{
-                    //     id: res.data.id, //unique article id
-                    //     headline: '', //title of article
-                    //     createdOn: '', //timestamp of when article was added
-                    //     summary: "", //short summary statement of article
-                    //     body: ""  //paragraph of article text
-                    // }
-                    // }
-                    console.log(blogArticles)
-                })
-                //  })
-                .catch(err=>console.error(err))
-            }
+            setArticles(blogArticles)
+            })
+            .catch(err=>console.error(err))
+    }
 
     
     useEffect(()=>{

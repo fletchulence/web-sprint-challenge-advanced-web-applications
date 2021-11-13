@@ -11,7 +11,9 @@ const initialArticle = {
 
 const EditForm = (props)=> {
     const [article, setArticle]  = useState(initialArticle);
-    const {handleEdit, handleEditCancel, editId} = props;
+    const { handleEdit, handleEditCancel, editId } = props;
+
+    console.log(handleEdit)
 
     const handleChange = (e)=> {
         setArticle({
