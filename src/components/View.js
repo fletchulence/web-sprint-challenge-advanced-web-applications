@@ -14,7 +14,9 @@ const View = (props) => {
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
-    const { id } = useParams
+
+
+    // const { id } = useParams
 
     const articleServices = () =>{
         const blogArticles = [];
@@ -62,8 +64,8 @@ const View = (props) => {
     const handleDelete = (id) => {
         axiosWithAuth().delete(`http://localhost:5004/api/articles/${id}`)
             .then(res=>{
-                console.log(res)
-                // articleServices(res)
+                console.log(res.data.id)
+                articleServices(res.data.id)
             })
             .catch(err=>{
                 console.log(err)
@@ -76,7 +78,8 @@ const View = (props) => {
         axiosWithAuth().put(`http://localhost:5004/api/articles/${id}`, article)
             .then(res=>{
                 console.log(res)
-                articleServices(article)
+                articleServices(res.data)
+                setEditing(false)
             })
             .catch(err=>{
                 console.error(err)
