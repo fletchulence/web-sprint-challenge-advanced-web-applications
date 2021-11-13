@@ -20,7 +20,7 @@ const EditForm = (props)=> {
     useEffect(()=>{
         axiosWithAuth().get(`http://localhost:5004/api/articles/${editId}`)
             .then(res=>{
-                console.log(res)
+                // console.log(res)
                 setArticle(res.data)
             })
             .catch(err=>{

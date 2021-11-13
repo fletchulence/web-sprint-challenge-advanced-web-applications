@@ -1,39 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router';
 
 import Article from './Article';
 import EditForm from './EditForm';
 
-
 // import articleService from '../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
-
-
 
 const View = (props) => {
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
-    // const { id } = useParams
+    // console.log(props)
 
     const articleServices = () =>{
         axiosWithAuth().get('http://localhost:5004/api/articles')
           .then(res=>{
-            // console.log(res.data)
-            // const article = res.data
-            // res.data.map((article)=> {
-            //     // article.push({
-            //     //     id: article.id, 
-            //     //     headline: article.headline, //title of article
-            //     //     createdOn: article.createdOn, //timestamp of when article was added
-            //     //     summary: article.summary, //short summary statement of article
-            //     //     body: article.summary,  //paragraph of article text
-            //     //     image: article.image    //?NOT IN THE README AS SOMETHING IT MAPS THRU -- mostly bc it looks better with this
-            //     // }) 
-            // return article
-            // })
+        
             setArticles(res.data)
             })
             .catch(err=>console.error(err))
@@ -43,33 +27,6 @@ const View = (props) => {
     
     useEffect(()=>{
         articleServices()
-
-        // const getArticles= ()=>{
-            //  axiosWithAuth().get('http://localhost:5004/api/articles')
-            //     .then(res=>{
-            //         console.log(res)
-            //         setArticles(res.data)
-            //         // articleServices()
-            //     })
-            //     .catch(err=>{
-            //         console.error({ err })
-            //     })
-        
-        // getArticles()
-        // console.log(articles)
-        // axios.post('')
-        // setArticles
-        // console.log(articles)
-
-        // axiosWithAuth().get('http://localhost:5004/api/articles')
-        //     .then(res=>{
-        //         console.log(res.data)
-        //         setArticles(res.data)
-        //     })
-        //     .catch(err=>{
-        //         console.log(err);
-        //     })
-
     }, [])
 
     // console.log(articles)
@@ -90,24 +47,10 @@ const View = (props) => {
     const handleEdit = (article) => {
         axiosWithAuth().put(`http://localhost:5004/api/articles/${editId}`, article)
             .then(res=>{
-                console.log(res)
-                console.log(article.author)
+                // console.log(res)
+                // console.log(article.author)
 
                 articleServices()
-                // article.map((item)=>console.log(item))
-                // setArticles(
-                //      articles.map(()=> {
-                //         article={
-                //             id: article.id, 
-                //             headline: article.headline, //title of article
-                //             createdOn: article.createdOn, //timestamp of when article was added
-                //             summary: article.summary, //short summary statement of article
-                //             body: article.summary,  //paragraph of article text
-                //             image: article.image    //?NOT IN THE README AS SOMETHING IT MAPS THRU -- mostly bc it looks better with this
-                //         } 
-                //     return article
-                //     })) //this is what allows it to edit -- due to a put
-
                 setEditing(false)
             })
             .catch(err=>{

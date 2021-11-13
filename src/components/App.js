@@ -10,7 +10,7 @@ import View from './View';
 import Login from './Login';
 import Logout from './Logout';
 
-import articleService from '../services/articleServices';
+// import articleService from '../services/articleServices';
 
 const App = () => {
   return (
@@ -26,7 +26,7 @@ const App = () => {
           </Route>  
 
           {/* protecct routes */}
-          <PrivateRoute path="/view" component={View} articleService={articleService}/>  
+          <PrivateRoute path="/view" component={View} />  
           <PrivateRoute path="/logout" component={Logout}/>
 
           <Route exact path="/">
