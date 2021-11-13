@@ -9,23 +9,22 @@ import EditForm from './EditForm';
 // import articleService from '../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
+
+
 const View = (props) => {
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
-
-
-    // const { id } = useParams
+    // console.log(props)
 
     const articleServices = () =>{
-        const blogArticles = [];
-        axiosWithAuth().get('http://localhost:5004/api/articles')
+        axiosWithAuth().post('http://localhost:5004/api/articles', articles)
           .then(res=>{
-            console.log(res.data)
+            // console.log(res.data)
             // const article = res.data
             res.data.map((article)=> {
-                blogArticles.push({
+                articles.push({
                     id: article.id, 
                     headline: article.headline, //title of article
                     createdOn: article.createdOn, //timestamp of when article was added
@@ -33,16 +32,27 @@ const View = (props) => {
                     body: article.summary,  //paragraph of article text
                     image: article.image    //?NOT IN THE README AS SOMETHING IT MAPS THRU -- mostly bc it looks better with this
                 }) 
-            return blogArticles
+            return articles
             })
-            setArticles(blogArticles)
+            setArticles(articles)
             })
             .catch(err=>console.error(err))
     }
 
+
     
     useEffect(()=>{
+        // const getArticles= ()=>{
+             axiosWithAuth().get('http://localhost:5004/api/articles')
+                .then(res=>{
+                    setArticles(res.data)
+                })
+                .catch(err=>{
+                    console.error({ err })
+                })
+        
         articleServices()
+        // getArticles()
         // console.log(articles)
         // axios.post('')
         // setArticles
@@ -65,7 +75,7 @@ const View = (props) => {
         axiosWithAuth().delete(`http://localhost:5004/api/articles/${id}`)
             .then(res=>{
                 console.log(res.data.id)
-                articleServices(res.data.id)
+                setArticles(res.data)
             })
             .catch(err=>{
                 console.log(err)
