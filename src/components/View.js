@@ -12,19 +12,59 @@ const View = (props) => {
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
 
+
+    const articleServices = () =>{
+        const blogArticles = [];
+        axiosWithAuth().get('http://localhost:5004/api/articles')
+         .then(res=>{
+            console.log(res.data)
+            // const article = res.data
+            res.data.map((article)=> {
+                blogArticles.push({
+                    id: article.id, 
+                    headline: article.headline, //title of article
+                    createdOn: article.createdOn, //timestamp of when article was added
+                    summary: article.summary, //short summary statement of article
+                    body: article.summary  //paragraph of article text
+                    // }
+                }) 
+                return blogArticles
+            })
+            
+            // setArticles(res.data)
+            // res.data.map((article)=>{
+                // console.log(id);
+                // return (article)
+                // article:{
+                    //     id: res.data.id, //unique article id
+                    //     headline: '', //title of article
+                    //     createdOn: '', //timestamp of when article was added
+                    //     summary: "", //short summary statement of article
+                    //     body: ""  //paragraph of article text
+                    // }
+                    // }
+                    console.log(blogArticles)
+                })
+                //  })
+                .catch(err=>console.error(err))
+            }
+
     
     useEffect(()=>{
-        // setArticles(props.articleService(articles.id))
+        articleServices()
+        // console.log(articles)
+        // axios.post('')
+        // setArticles
         // console.log(articles)
 
-        axiosWithAuth().get('http://localhost:5004/api/articles')
-            .then(res=>{
-                console.log(res.data)
-                setArticles(res.data)
-            })
-            .catch(err=>{
-                console.log(err);
-            })
+        // axiosWithAuth().get('http://localhost:5004/api/articles')
+        //     .then(res=>{
+        //         console.log(res.data)
+        //         setArticles(res.data)
+        //     })
+        //     .catch(err=>{
+        //         console.log(err);
+        //     })
 
     }, [])
 

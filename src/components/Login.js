@@ -22,10 +22,12 @@ const Login = () => {
     const handleSubmit= (e) => {
         e.preventDefault()
          axios.post('http://localhost:5004/api/login', credentials)
-        .then(res=>{
-                // console.log(res)
+            .then(res=>{
+                console.log(res)
                 //set token to localStorage
                 window.localStorage.setItem('token', res.data.token)
+                window.localStorage.setItem('role', res.data.role)
+                window.localStorage.setItem('username', res.data.username)
                 // then route user to /view
                 push('/view')
             })
