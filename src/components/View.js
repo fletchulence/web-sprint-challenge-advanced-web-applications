@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Article from './Article';
 import EditForm from './EditForm';
 
-import articleServices from './../services/articleServices';
+import { articleServices } from './../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 const View = (props) => {
@@ -64,7 +64,7 @@ const View = (props) => {
                 {
                     articles.map(article => {
                         return <ArticleDivider key={article.id}>
-                            <Article data-testid="article"
+                            <Article
                                 key={article.id} 
                                 article={article} 
                                 handleDelete={handleDelete} 

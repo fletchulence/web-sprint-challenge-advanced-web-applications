@@ -1,6 +1,6 @@
 import axiosWithAuth from "./../utils/axiosWithAuth"
 
-const articleServices = async() => {
+export const articleServices = async() => {
    return axiosWithAuth()
       .get('http://localhost:5004/api/articles')
         .then(res=>{
@@ -12,4 +12,4 @@ const articleServices = async() => {
          .catch(err=>console.error(err))
 }
 
-export default articleServices;
+// export default articleServices;
