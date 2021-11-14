@@ -2,68 +2,61 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import View from './View';
+import axios from 'axios';
 
-import { articleServices as mockServices }  from '../services/articleServices'
+import articleServices  from './../services/articleServices'
 
-jest.mock('../services/articleServices')
+jest.mock('./../services/articleServices')
 
+const noArticles = []
 const articles = [
- {
-      id: '1', //unique article id
-      headline: "headline 1", //title of article
-      createdOn: 'date 1', //timestamp of when article was added
-      summary: "summary1", //short summary statement of article
-      body: "body 1"  //paragraph of article text
-  },
-  {
-      id: '2', //unique article id
-      headline: "headline 2", //title of article
-      createdOn: 'date 2', //timestamp of when article was added
-      summary: "summary2", //short summary statement of article
-      body: "body 2"  //paragraph of article text
-  },
-  {
-      id: '3', //unique article id
-      headline: "headline 3", //title of article
-      createdOn: 'date 3', //timestamp of when article was added
-      summary: "summary 3", //short summary statement of article
-      body: "body 3"  //paragraph of article text
-  }
-]
+      {
+           id: '1', //unique article id
+           headline: "headline", //title of article
+           author: 'me',
+           image: 0,
+           createdOn: 123, //timestamp of when article was added
+           summary: "summary", //short summary statement of article
+           body: "body"  //paragraph of article text
+       },
+      {
+           id: '2', //unique article id
+           headline: "headline", //title of article
+           author: 'me',
+           image: 0,
+           createdOn: 123, //timestamp of when article was added
+           summary: "summary", //short summary statement of article
+           body: "body"  //paragraph of article text
+       },
+      {
+           id: '3', //unique article id
+           headline: "headline", //title of article
+           author: 'me',
+           image: 0,
+           createdOn: 123, //timestamp of when article was added
+           summary: "summary", //short summary statement of article
+           body: "body"  //paragraph of article text
+       },
+    ]
 
-test('sanity test', async () =>{
-   render(<View articles={articles} articleServices={fakeArticleServices}/>)
-   
-   console.log(fakeArticleServices.mock)
-})
 
 test("renders zero articles without errors", async () => {
-   const fakeArticleServices = jest.fn(Promise.all)
-   // mockServices.mockResolvedValueOnce({ articles })
-   // // ARRANGE
-   // const { findAllByTestId, findByText } = 
-   render(<View articles={null}/>)
-   // // // ACT
-   // // // const articleServices = await screen.findby
-   // const deleteButton = findAllByTestId(/deleteButton/i)
-   // // // // ASSERT
-   // userEvent.click(deleteButton)
-   // userEvent.click(deleteButton)
-   // userEvent.click(deleteButton)
+   articleServices.mockResolvedValue({ noArticles })
+   render(<View articles={noArticles}/>)
+   const article= await screen.queryByTestId(/article/i)
 
-   const article = await screen.findAllByTestId(/article/i)
-   expect(article).toBeInTheDocument()
-   
-   expect(fakeArticleServices).toHaveBeenCalledTimes(3)
-
+   expect(article).toBeNull()
 
 });
 
 test("renders three articles without errors", async ()=> {
    //ARRANGE
-
+   articleServices.mockResolvedValue( articles )
+   render(<View articles={articles}/>)
    //ACT
+   const article = await screen.findAllByTestId(/article/i)
    //ASSERT
+   expect(article).toHaveLength(3)
 });
 
 //Task List

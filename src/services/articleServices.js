@@ -1,8 +1,7 @@
 import axiosWithAuth from "./../utils/axiosWithAuth"
 
-export const articleServices = async() => {
-   return axiosWithAuth()
-      .get('http://localhost:5004/api/articles')
+const articleServices = () => {
+   return axiosWithAuth().get('http://localhost:5004/api/articles')
         .then(res=>{
          // within your data is now your get request
          const { data } = res
@@ -12,4 +11,4 @@ export const articleServices = async() => {
          .catch(err=>console.error(err))
 }
 
-// export default articleServices;
+export default articleServices;
