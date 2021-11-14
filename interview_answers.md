@@ -13,7 +13,7 @@ Be prepared to demonstrate your understanding of this week's concepts by answeri
 
 3. Describe how web servers work.
 
-   - Web servers are basically
+   - Web servers are basically the (most common) way in which we (the user) is able to see anything which is dynamic on our page. Servers are not only the passing of information from one place to another (code), they are also physical devices which hold and store this dynamic information. 
 
 4. Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
 
