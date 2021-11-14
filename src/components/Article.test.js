@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 
-import { screen, render } from '@testing-library/react';
+import { screen, render, waitFor } from '@testing-library/react';
 
 import userEvent from '@testing-library/user-event';
 import MutationObserver from 'mutationobserver-shim';
@@ -22,7 +22,7 @@ test('renders component without errors', ()=> {
 });
 
 test('renders headline, author from the article when passed in through props', ()=> {
-   //ARRANGE: what component
+   //ARRANGE: article mounts without any information at first
    const {rerender} = render(<Article article={{}}/>)
    //ACT: 
    const article = screen.getByTestId(/article/i)
@@ -32,7 +32,7 @@ test('renders headline, author from the article when passed in through props', (
    expect(header).not.toHaveValue()
    expect(author).not.toHaveValue()
 
-   //rerender
+   //rerender article renders with props that are passed in, once they are passed in
    rerender((<Article article={article}/>))
 
    expect(article).toBeInTheDocument()
@@ -47,13 +47,23 @@ test('renders "Associated Press" when no author is given', ()=> {
    const author = screen.getByTestId(/author/i)
    //ASSERT
    expect(header).toBeInTheDocument()
-   //eventhough there is nothing being passed in to author,
+   // eventhough there is nothing being passed in to author,
    // it should still render
    expect(author).toBeInTheDocument()
 });
 
-// test('executes handleDelete when the delete button is pressed', ()=> {
-// });
+test('executes handleDelete when the delete button is pressed', async()=> {
+   const handleDeleteMock = jest.fn()
+   //ARRANGE
+   render(<Article article={testArticle} handleDelete={handleDeleteMock}/>)
+   // console.log(handleDeleteMock)
+   //ACT
+   const deleteButton = await screen.findByTestId(/deleteButton/i)
+   //ASSERT: we want handleDelete to have been called on the click
+   userEvent.click(deleteButton)
+   expect(handleDeleteMock).toHaveBeenCalled()
+
+});
 
 //Task List:
 //1. Complete all above tests. Create test article data when needed.
