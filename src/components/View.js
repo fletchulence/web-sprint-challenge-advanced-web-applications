@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Article from './Article';
@@ -9,14 +8,13 @@ import articleServices from './../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 const View = (props) => {
-    console.log(props)
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
     
 
     useEffect(()=>{
-        //onmount get the 
+        //onmount get the data from our article servides
         articleServices()
           .then(res=>{
             //  now set your services (formatted properly) in the articles array
@@ -62,11 +60,15 @@ const View = (props) => {
     return(<ComponentContainer>
         <HeaderContainer>View Articles</HeaderContainer>
         <ContentContainer flexDirection="row">
-            <ArticleContainer>
+            <ArticleContainer >
                 {
                     articles.map(article => {
                         return <ArticleDivider key={article.id}>
-                            <Article key={article.id} article={article} handleDelete={handleDelete} handleEditSelect={handleEditSelect}/>
+                            <Article data-testid="article"
+                                key={article.id} 
+                                article={article} 
+                                handleDelete={handleDelete} 
+                                handleEditSelect={handleEditSelect}/>
                         </ArticleDivider>
                     })
                 }
