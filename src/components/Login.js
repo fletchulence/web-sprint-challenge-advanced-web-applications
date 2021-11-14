@@ -62,7 +62,7 @@ const Login = () => {
                     />
                 </Label>
                 <Button id='submit' type='submit'>Log in</Button>
-                <Label> 
+                <Label htmlFor='error'> 
                     <p id='error' style={{color: 'red'}}> {error} </p>
                 </Label>
             </FormGroup>
