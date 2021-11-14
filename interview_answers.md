@@ -3,8 +3,19 @@ Be prepared to demonstrate your understanding of this week's concepts by answeri
 
 1. Explain what a token is used for.
 
+   - A token is at the very basic sense a breadcrumb. It is the way in which the browser is able to continuously recognize a session by the user and device. When you login to a website, a token is generated (technically) by the browser for which it processes checks. This token is placed on the devices' localStorage (within the browser) and is used for conditional statments like the below.
+
 2. What steps can you take in your web apps to keep your data secure?
+
+   -  Other than just tokens and sercret passphrases, we can also use Redirects through Protected/PrivateRoute 's. We didnt really go through the {...rest} object very much, but we can use a conditional to say, "if the device requesting access has their 
 
 3. Describe how web servers work.
 
+   - Web servers are basically
+
 4. Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
+
+   - C: create - axios post - creates data onto the server which didnt already exist ( usually used to post user entered data from a form )
+   - R: read - axios.get - reads data from the server/api (used to set datums which are coming from the API)
+   - U: update - axios.put - updates data that already exists on the server (usually used for editing data)
+   - D: delete - axios.delete - deletes data from the server/api
