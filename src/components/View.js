@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Article from './Article';
 import EditForm from './EditForm';
 
-import { articleServices } from './../services/articleServices';
+import articleServices from './../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 const View = (props) => {
@@ -14,9 +14,8 @@ const View = (props) => {
     
 
     useEffect(()=>{
-        //onmount get the data from our article servides
-        articleServices()
-          .then(res=>{
+        //on mount get the data from our article servides
+        articleServices(articles).then(res=>{
             //  now set your services (formatted properly) in the articles array
               setArticles(res);
         })
@@ -32,7 +31,7 @@ const View = (props) => {
                 setArticles(res.data)
             })
             .catch(err=>{
-                console.log(err)
+                console.error({ err })
             })
     }
 
@@ -60,11 +59,12 @@ const View = (props) => {
     return(<ComponentContainer>
         <HeaderContainer>View Articles</HeaderContainer>
         <ContentContainer flexDirection="row">
-            <ArticleContainer >
+            <ArticleContainer>
                 {
                     articles.map(article => {
                         return <ArticleDivider key={article.id}>
                             <Article
+                                data-testid="article"
                                 key={article.id} 
                                 article={article} 
                                 handleDelete={handleDelete} 
