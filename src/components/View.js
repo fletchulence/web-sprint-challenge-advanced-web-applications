@@ -1,58 +1,48 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Article from './Article';
 import EditForm from './EditForm';
 
-// import articleService from '../services/articleServices';
+import articleServices from './../services/articleServices';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
 const View = (props) => {
+    console.log(props)
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
-
-    // console.log(props)
-
-    const articleServices = () =>{
-        axiosWithAuth().get('http://localhost:5004/api/articles')
-          .then(res=>{
-        
-            setArticles(res.data)
-            })
-            .catch(err=>console.error(err))
-    }
     
 
     useEffect(()=>{
         //onmount get the 
         articleServices()
-
+          .then(res=>{
+            //  now set your services (formatted properly) in the articles array
+              setArticles(res);
+        })
+        .catch(err=>{
+            console.error({err})
+        })
     }, [])
-
-    // console.log(articles)
 
     const handleDelete = (id) => {
         axiosWithAuth().delete(`http://localhost:5004/api/articles/${id}`)
             .then(res=>{
-                // console.log(res.data)
-                // setArticles(res.data)
-                articleServices()
+                // now set the articles to the ones that werent deleted
+                setArticles(res.data)
             })
             .catch(err=>{
                 console.log(err)
             })
-        // these are things that are editing the //!actual posts
-        // we need to do the posts in the -- article i think
     }
 
     const handleEdit = (article) => {
         axiosWithAuth().put(`http://localhost:5004/api/articles/${editId}`, article)
             .then(res=>{
-                // console.log(res)
-                // console.log(article.author)
-
-                articleServices()
+                // now put the article back in the articles array
+                setArticles(res.data)
                 setEditing(false)
             })
             .catch(err=>{
