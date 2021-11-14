@@ -1,10 +1,11 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import View from './View';
 
-import { articleServices as mockArticleServices } from './../services/articleServices'
+import { articleServices as mockServices }  from '../services/articleServices'
 
-jest.mock('./../services/articleServices')
+jest.mock('../services/articleServices')
 
 const articles = [
  {
@@ -30,23 +31,37 @@ const articles = [
   }
 ]
 
+test('sanity test', async () =>{
+   render(<View articles={articles} articleServices={fakeArticleServices}/>)
+   
+   console.log(fakeArticleServices.mock)
+})
 
 test("renders zero articles without errors", async () => {
-   mockArticleServices.mockResolvedValuesOnce(articles)
+   const fakeArticleServices = jest.fn(Promise.all)
+   // mockServices.mockResolvedValueOnce({ articles })
+   // // ARRANGE
+   // const { findAllByTestId, findByText } = 
+   render(<View articles={null}/>)
+   // // // ACT
+   // // // const articleServices = await screen.findby
+   // const deleteButton = findAllByTestId(/deleteButton/i)
+   // // // // ASSERT
+   // userEvent.click(deleteButton)
+   // userEvent.click(deleteButton)
+   // userEvent.click(deleteButton)
+
+   const article = await screen.findAllByTestId(/article/i)
+   expect(article).toBeInTheDocument()
    
-   // ARRANGE
-   render(<View article={article} articleServices={articleServices}/>)
-   // ACT
-   // const articleServices = await screen.findby
-   // const article = await screen.findAllByTestId('article')
-   // // ASSERT
-   // expect(article).toBeInTheDocument()
+   expect(fakeArticleServices).toHaveBeenCalledTimes(3)
 
 
 });
 
 test("renders three articles without errors", async ()=> {
    //ARRANGE
+
    //ACT
    //ASSERT
 });
