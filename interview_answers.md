@@ -7,7 +7,9 @@ Be prepared to demonstrate your understanding of this week's concepts by answeri
 
 2. What steps can you take in your web apps to keep your data secure?
 
-   -  Other than just tokens and sercret passphrases, we can also use Redirects through Protected/PrivateRoute 's. We didnt really go through the {...rest} object very much, but we can use a conditional to say, "if the device requesting access has their 
+   -  More specifically, with regards to tokens (and sercret passphrases), we use Redirects through Protected/PrivateRoute 's. We didnt really go through the {...rest} object very much, but we can use a conditional statements to say, "if x device requesting access has the token that matches, send them on => if NOT then push the client to a separate page so that things cant be retrieved.
+
+   - tokens also CHANGE based on the session - unique from one session to the other. Encryptions also allow for us to get personal information retrieved, if a token is intercepted. There should be other backdoors and such for things like this.
 
 3. Describe how web servers work.
 
